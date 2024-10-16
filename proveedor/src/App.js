@@ -143,7 +143,7 @@ function App() {
         <input type="text" onChange={(event) => { setArl(event.target.value) }} />
 
         <label>ContactoEmergencia:</label>
-        <input type="text" onChange={(event) => { setContacto(event.target.value) }} />
+        <input type="number" onChange={(event) => { setContacto(event.target.value) }} />
 
         <div className="contenido">
           <label>Firma:</label>
