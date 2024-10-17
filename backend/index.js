@@ -14,7 +14,7 @@ const db = mysql.createConnection({
 });
 
 app.post("/create", (req, res) => {
-    console.log(req.body); 
+    console.log(req.body);
     const {
         FechaHoraEntrada,
         Documento,
@@ -29,9 +29,11 @@ app.post("/create", (req, res) => {
         FechaHoraSalida
     } = req.body;
 
+    const buffer = Buffer.from(Firma.split(',')[1], 'base64'); // Convertir a buffer
+
     const query = "INSERT INTO proveedores (FechaHoraEntrada, Documento, Nombre, Apellido, Empresa, Cargo, Eps, Arl, ContactoEmergencia, Firma, FechaHoraSalida) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    
-    db.query(query, [FechaHoraEntrada, Documento, Nombre, Apellido, Empresa, Cargo, Eps, Arl, ContactoEmergencia, Firma, FechaHoraSalida], (err, result) => {
+
+    db.query(query, [FechaHoraEntrada, Documento, Nombre, Apellido, Empresa, Cargo, Eps, Arl, ContactoEmergencia, buffer, FechaHoraSalida], (err, result) => {
         if (err) {
             console.error(err);
             return res.status(500).send("Error al registrar los datos.");
@@ -41,7 +43,20 @@ app.post("/create", (req, res) => {
     });
 });
 
+app.get("/proveedores", (req, res) => {
+    db.query("SELECT *, firma FROM proveedores", (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            const proveedoresConFirma = result.map(row => ({
+                ...row,
+                Firma: `data:image/png;base64,${row.firma.toString('base64')}`
+            }));
+            res.send(proveedoresConFirma);
+        }
+    });
+});
 
-app.listen(3001, () => {
+app.listen(3001,() => {
     console.log("Servidor escuchando en el puerto 3001");
 });

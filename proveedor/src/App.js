@@ -17,6 +17,8 @@ function App() {
   const [FechaHoraSalida, setFechaHoraSalida] = useState("");
   const canvasRef = useRef(null);
 
+  const [listaProveedores,setProveedores] = useState([]);
+
   const Añadir = () => {
     const canvas = canvasRef.current;
     const firmaData = canvas.toDataURL('image/png');
@@ -39,6 +41,7 @@ function App() {
       Firma: firmaData,
       FechaHoraSalida: formattedFechaHoraSalida
     }).then(() => {
+      getProveedores();
       alert("Registrado");
     }).catch((error) => {
       console.error("Error:", error);
@@ -115,6 +118,13 @@ function App() {
     context.clearRect(0, 0, canvas.width, canvas.height);
   };
 
+  const getProveedores = () => {
+   
+    Axios.get("http://localhost:3001/proveedores").then((response) => {
+      setProveedores(response.data);
+    });
+  }
+
   return (
     <div className="App">
       <div className="informacion">
@@ -160,7 +170,52 @@ function App() {
         <label>FechaHoraSalida:</label>
         <input value={FechaHoraSalida} readOnly placeholder='Fecha y hora de salida' />
       </div>
+        <button onClick={getProveedores}>Consultar</button>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>FechaHoraEntrada</th>
+              <th>Documento</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Empresa</th>
+              <th>Cargo</th>
+              <th>Arl</th>
+              <th>ContactoEmergencia</th>
+              <th>Firma</th>
+              <th>FechaHoraSalida</th>
+            </tr>
+          </thead>
+            <tbody>
+              {
+                listaProveedores.map((val, key) => {
+                  return (
+                    <tr key={key}>
+                      <td>{val.id}</td>
+                      <td>{val.FechaHoraEntrada}</td>
+                      <td>{val.Documento}</td>
+                      <td>{val.Nombre}</td>
+                      <td>{val.Apellido}</td>
+                      <td>{val.Empresa}</td>
+                      <td>{val.Cargo}</td>
+                      <td>{val.Arl}</td>
+                      <td>{val.ContactoEmergencia}</td>
+                      <td>
+                        <img src={val.Firma} alt="Firma" style={{ maxWidth: '100px', maxHeight: '50px' , backgroundColor:"white"}} />
+                      </td>
+                      <td>{val.FechaHoraSalida}</td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
     </div>
+
+   
   );
 }
 

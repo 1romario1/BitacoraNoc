@@ -36,43 +36,43 @@ header {
   align-items: center; 
   justify-content: center; 
   padding: 10px; 
-  background: #000000;
+  background: #fcfcfc;
 }
 
 header img {
   max-width: 150px; 
   height: auto; 
   margin-bottom: 10px; 
-  background-color: #f8f8f8;
+  background-color: #ffffff;
+  border: 5px solid #a81d75;
+  border-radius: 15px;
 }
 
 header h1 {
   font-size: 24px; 
   text-align: center; 
   margin: 0; 
-  color: white; 
+  color: rgb(0, 0, 0); 
 }
 
-
-h1{
-  margin-left: 530px;
-  color: aliceblue;  
-  text-shadow: 5px 5px 20px black;
+*{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
 body{
   background: #a81d75;
   background: linear-gradient(125deg,#a81d75,#b11731);
   margin: 0;
 }
 img{
-  box-shadow: 5px 5px 100px black;
+  box-shadow: 5px 5px 120px black;
   border-radius: 5px;
 }
 
 canvas{
   background-color: white;
-  border: 2px solid #a71b74;
-  border-radius: 5px;
+  border: 5px solid #a71ba0;
+  border-radius: 15px;
   height: auto; 
   width: auto;
 }
@@ -104,7 +104,7 @@ canvas{
 }
 
 
-@media (min-width: 354px) and (max-width: 900px){
+@media (min-width: 353px) and (max-width: 900px){
   header h1 {
       font-size: 18px; 
   }
@@ -113,8 +113,45 @@ canvas{
   }
 }
 
-@media (min-width: 570px) and (max-width:894px){
+@media (min-width: 570px) and (max-width:895px){
   header{
-    width: 855px;
+    width: 872px;
+  }
+  .informacion{
+    margin-left: 155px;
+  }
+  table {
+    width: 100%;
+    margin: 20px 0;
+    background-color: #252525;
+    color: white;
   }
 }
+
+table {
+  width: 100%;
+  margin: 20px 0;
+  background-color: #252525;
+  color: white;
+}
+
+thead {
+  background-color: #000000;
+  color: white;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th {
+  font-weight: bold;
+}
+
+tr:hover {
+  background-color: #383838;
+}
+
+
